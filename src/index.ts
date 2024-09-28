@@ -56,9 +56,8 @@ navMenuBtn.addEventListener('click', function(event) {
   menuOpen = !menuOpen;
 });
 
-// adding hover animation on Nav Menu Links
-// Selecting Nav menu links to rotate on hover animation
-
+// magnetic button hover animation 
+// Selecting button on hover animation
 
 
 
