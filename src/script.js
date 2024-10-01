@@ -2,7 +2,69 @@ import { gsap } from "gsap";
     
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
+import Lenis from 'lenis'
 
+//start of on load anaimation on titles
+
+const chars = document.querySelectorAll('[char-animation]');
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  
+    // Loop through each char element
+    chars.forEach((charElement) => {
+        // Ensure GSAP is available
+        if (typeof gsap === 'undefined') return;
+        
+
+        // Create a timeline animation for the element
+        gsap.timeline({
+            defaults: {
+                duration: 1,
+                ease: "power3.out"
+            }
+        })
+        .fromTo(charElement.querySelectorAll(".char"), {
+            x: -30,
+            clipPath: "inset(0% 100% 120% -5%)"
+        }, {
+            x: 0,
+            duration: 1.2,
+            stagger: 0.1,
+            yPercent: 0,
+            clipPath: "inset(0% -100% -100% -5%)",
+            overwrite: true
+        });
+    });
+    //selecting the elements
+    const lastnameload = document.querySelectorAll('[last-nameload]');
+    const navbarAnimation = document.querySelectorAll('[navbar-animation]');
+      gsap.timeline({
+        defaults: {
+          duration: 1,
+          ease: "power3.out"
+        }
+      })
+      .fromTo(lastnameload ,{
+        y: 50,
+        opacity: 0
+      },
+      {
+        y: 0,
+        stagger: .1,
+        opacity: 1
+      },'=.3')
+      .fromTo(navbarAnimation ,{
+        y:-50,
+        opacity: 0
+      },
+      {
+        y: 0,
+        opacity: 1
+
+    }, '-=1.5');
+    
+});
 
 gsap.registerPlugin(ScrollTrigger);
 window.Webflow ||= [];
@@ -56,40 +118,10 @@ navMenuBtn.addEventListener('click', function(event) {
   menuOpen = !menuOpen;
 });
 
-// magnetic button hover animation 
-// Selecting button on hover animation
-const mWrap = document.querySelectorAll('[magnetic-hover]');
-// Loop through each element in the NodeList
-mWrap.forEach((element) => {
-    let boundingRect = element.getBoundingClientRect();
 
-    window.addEventListener('resize', () => {
-        boundingRect = element.getBoundingClientRect();
-    });
-
-    element.addEventListener('mousemove', (e) => {
-        const mousePosX = e.pageX - boundingRect.left;
-        const mousePosY = e.pageY - boundingRect.top;
-
-        gsap.to(element, {
-            x: (mousePosX - boundingRect.width / 2) * .09,
-            y: (mousePosY - boundingRect.height / 2) * .09,
-            duration: 0.8,
-            ease: 'power3.out',
-        });
-    });
-
-element.addEventListener('mouseleave', () => {
-    gsap.to(element, {
-        x:0,
-        y: 0,
-        duration: 0.8,
-        ease: 'elastic.out(1,0.30)'
-    });
-});
-});
 //button hover 2
 $("[data-btn='wrap']").each(function () {
+
     const clipEl = $(this).find("[data-btn='clip']").attr("aria-hidden", "true");
     const durationSetting = 0.4;
     const easeSetting = "power2.out";
@@ -116,6 +148,66 @@ $("[data-btn='wrap']").each(function () {
       gsap.to(clipEl, { clipPath: `circle(0% at ${percentLeft}% ${percentTop}%)`, overwrite: true, duration: durationSetting, ease: easeSetting });
     });
   });
+
+//portfolio cases animation on hover
+$("[portfolio-cases]").each(function (index) {
+let portfolioCasesSlides = $(this).find('[portfolio-cases-slides]');
+let portfolioCasesImg = $(this).find('[portfolio-case-img]');
+const durationSetting = 1.4;
+const easeSetting = "power2.out";
+
+let tl = gsap.timeline({ paused: true });
+
+tl.to (portfolioCasesSlides, {borderColor: '#ffffff',duration: '.5',ease: easeSetting})
+.to (portfolioCasesImg, {transform: "scale(1.1)", ease: easeSetting, duration: durationSetting}, '-=.5');
+
+$(this).on("mouseenter", function () {
+  tl.play();
+  tl.duration(1.2);
+});
+$(this).on("mouseleave", function () {
+tl.reverse();
+tl.duration(.9);
+});
+
+});
+
+//start of smooth scroll for pages linis scroll
+let lenis;
+if (Webflow.env("editor") === undefined) {
+  lenis = new Lenis({
+    lerp: 0.1,
+    wheelMultiplier: .9,
+    gestureOrientation: "vertical",
+    normalizeWheel: false,
+    smoothTouch: false
+  });
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
+}
+$("[data-lenis-start]").on("click", function () {
+  lenis.start();
+});
+$("[data-lenis-stop]").on("click", function () {
+  lenis.stop();
+});
+$("[data-lenis-toggle]").on("click", function () {
+  $(this).toggleClass("stop-scroll");
+  if ($(this).hasClass("stop-scroll")) {
+    lenis.stop();
+  } else {
+    lenis.start();
+  }
+});
+
+
+
+
+
+
 
 
 
