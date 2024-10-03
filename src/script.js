@@ -3,68 +3,127 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Lenis from 'lenis'
+import { CustomEase } from "gsap/CustomEase";
+import barba from '@barba/core';
 
-//start of on load anaimation on titles
+// function PageTransition() {
 
-const chars = document.querySelectorAll('[char-animation]');
+//   var tl = gsap.timeline()
 
+//   .fromTo(".trans_slide", {
+//     height: "0vh",
+//     duration: 0.9
+// }, {
+//     height: "100vh",
+//     duration: 0.9
+// })
+//   .fromTo(".trans_slide", {
+//     clipPath: "polygon(20% 0%, 20% 0%, 20% 100%, 40% 100%, 40% 0%, 40% 0%, 40% 100%, 60% 100%, 60% 0%, 60% 0%, 60% 100%, 80% 100%, 80% 0%, 80% 0%, 80% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 20% 100%)"
+// }, {
+//     clipPath: 'polygon(0% 0%, 20% 0%, 20% 100%, 20% 100%, 20% 0%, 40% 0%, 40% 100%, 40% 100%, 40% 0%, 60% 0%, 60% 100%, 60% 100%, 60% 0%, 80% 0%, 80% 100%, 80% 100%, 80% 0%, 100% 0%, 100% 100%, 0% 100%)',
+//     duration: 1
+// })
+// .to(".trans_slide", {
+//   x:"100%",ease: "power3.out",duration: 3});
+// }
 
-document.addEventListener("DOMContentLoaded", () => {
+// function delay(n) {
+//   n = n || 2000;
+//   return new Promise(done => {
+//     setTimeout(() => {
+//       done();
+//     }, n);
+//     });
+// }
+
+// function contentAnimation() {
+//   document.addEventListener("DOMContentLoaded", () => {
+//     gsap.set(" [last-nameload], [navbar-animation]", { opacity: 0 });
+//     // Animate text elements (like titles)
+//     const chars = document.querySelectorAll('[char-animation]');
+//     chars.forEach((charElement) => {
+//         gsap.timeline({
+//             defaults: {
+//                 duration: 1,
+//                 ease: "power3.out"
+//             }
+//         })
   
-    // Loop through each char element
-    chars.forEach((charElement) => {
-        // Ensure GSAP is available
-        if (typeof gsap === 'undefined') return;
-        
+//         .to(chars,{
+//           opacity: 1
+//         },"-=.8")
+//        .fromTo(charElement.querySelectorAll(".char"), {
+//            x: -30,
+//            clipPath: "inset(0% 100% 120% -5%)"
+  
+//        }, {
+  
+//            x: 0,
+//            duration: 2,
+//            stagger: 0.1,
+//            yPercent: 0,
+//            clipPath: "inset(0% -100% -100% -5%)",
+//            overwrite: true
+//        }, "-=.2");
+//    });
+  
+//    // Animate additional elements like last names and navbar
+//    const onloadOther = document.querySelectorAll('[last-nameload]');
+//    const navbarAnimation = document.querySelectorAll('[navbar-animation]');
+//    gsap.timeline({
+//        defaults: {
+//            duration: 1,
+//            ease: "power3.out"
+//        }
+//    })
+//    .fromTo(onloadOther, {
+//        y: 50,
+//        opacity: 0,
+//        filter: "blur(5px)"
+//    }, {
+//        y: 0,
+//        stagger: 0.1,
+//        filter: "blur(0px)",
+//        opacity: 1
+//    }, '=.3')
+//    .fromTo(navbarAnimation, {
+//        y: -50,
+//        opacity: 0
+//    }, {
+//        y: 0,
+//        opacity: 1
+//    }, '-=1.5');
+//   });
+// }
 
-        // Create a timeline animation for the element
-        gsap.timeline({
-            defaults: {
-                duration: 1,
-                ease: "power3.out"
-            }
-        })
-        .fromTo(charElement.querySelectorAll(".char"), {
-            x: -30,
-            clipPath: "inset(0% 100% 120% -5%)"
-        }, {
-            x: 0,
-            duration: 1.2,
-            stagger: 0.1,
-            yPercent: 0,
-            clipPath: "inset(0% -100% -100% -5%)",
-            overwrite: true
-        });
-    });
-    //selecting the elements
-    const lastnameload = document.querySelectorAll('[last-nameload]');
-    const navbarAnimation = document.querySelectorAll('[navbar-animation]');
-      gsap.timeline({
-        defaults: {
-          duration: 1,
-          ease: "power3.out"
-        }
-      })
-      .fromTo(lastnameload ,{
-        y: 50,
-        opacity: 0
-      },
-      {
-        y: 0,
-        stagger: .1,
-        opacity: 1
-      },'=.3')
-      .fromTo(navbarAnimation ,{
-        y:-50,
-        opacity: 0
-      },
-      {
-        y: 0,
-        opacity: 1
+// barba.init({
 
-    }, '-=1.5');
-    
-});
+//   sync: true,
+
+//   transitions: [{
+
+//     async leave(data) {
+
+//       const done = this.async();
+
+//       PageTransition();
+//       await delay(1500);
+//       done();
+//     },
+
+//     async enter(data) {
+//       contentAnimation();
+//     },
+
+//     async once(data) {
+//       contentAnimation();
+//     }
+//   }]
+// });
+
+
+
+
 
 gsap.registerPlugin(ScrollTrigger);
 window.Webflow ||= [];
@@ -203,7 +262,76 @@ $("[data-lenis-toggle]").on("click", function () {
   }
 });
 
+//start of all paragraph text element aniamtion
+  // Link timelines to scroll position
+  function createScrollTrigger(triggerElement, timeline) {
+    // Reset tl when scroll out of view past bottom of screen
+    ScrollTrigger.create({
+      trigger: triggerElement,
+      start: "top bottom",
+      onLeaveBack: () => {
+        timeline.progress(0);
+        timeline.pause();
+      }
+    });
+    // Play tl when scrolled into view (60% from top of screen)
+    ScrollTrigger.create({
+      trigger: triggerElement,
+      start: "top 99%",
+      onEnter: () => timeline.play()
+    });
+  }
+  const imgSlideUp = "[img-slide-up]";
+  const textRotateIn = "[text-rotate-in]";
+  const accentsAnimation = "[accents-animation]";
+  const globalButtonSlide = "[global-button-slide]";
+  
+  $(textRotateIn).each(function (index) {
+    let tl = gsap.timeline({ 
+      paused: true,
+      defaults:{
+        paddingBottom: "0.1em",
+        marginBottom: "-0.1em",
+        transformOrigin: "bottom",
+      }
+     });
+    tl.set($(this).find(".word"), { transformPerspective: 1000 });
+    tl.from($(this).find(imgSlideUp), { height:"0px", duration: 1, ease: "power2.out"});
+    tl.from($(this).find(".word"), { filter:"blur:7px",opacity:0, rotationX: -90, duration: .5, ease: "power2.out",stagger:{amount:"1.3"}},"-=.3" );
+    tl.from($(this).find(accentsAnimation), { width:"0px", duration: .5, ease: "power2.out"}, "-=1");
+    tl.from($(this).find(globalButtonSlide), {x: -20, duration: 1, ease: "power2.out"},"-=.5");
+    
+    
+    // tl.fromTo($(this).find(imgSlideUp), { clipPath:"polygon(0 100%, 100% 100%, 100% 93%, 0 92%)"},{clipPath:"polygon(0 100%, 100% 100%, 100% 0, 0 0)", duration: 1, ease: "power2.out" });
+    createScrollTrigger($(this), tl);
+  });
+  
+  // function createScrollTrigger(triggerElement, timeline) {
+  //   // Reset tl when scroll out of view past bottom of screen
+  //   ScrollTrigger.create({
+  //     trigger: triggerElement,
+  //     start: "top bottom",
+  //     onLeaveBack: () => {
+  //       timeline.progress(0);
+  //       timeline.pause();
+  //     }
+  //   });
+  //   // Play tl when scrolled into view (60% from top of screen)
+  //   ScrollTrigger.create({
+  //     trigger: triggerElement,
+  //     start: "top 90%",
+  //     onEnter: () => timeline.play()
+  //   });
+  // }
+  // const chars = document.querySelectorAll('[char-animation]');
+  const charsWrapper = document.querySelectorAll('[char-animation-wrapper]');
+  $(charsWrapper).each(function (index) {
+    let tl = gsap.timeline({ paused: true,});
+     tl.from($(this).find(".char"), {x: -30, clipPath: "inset(0% 100% 120% -5%)"}, {x: 0, duration: 4, stagger: 0.9,yPercent: 0,clipPath: "inset(0% -100% -200% -5%)",overwrite: true});
 
+
+     createScrollTrigger($(this), tl);
+    });
 
 
 
