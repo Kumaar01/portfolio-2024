@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.3
+
+### Patch Changes
+
+- 6ffb303: changed json main to script.js
+
 ## 1.0.2
 
 ### Patch Changes
