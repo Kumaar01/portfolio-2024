@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.4
+
+### Patch Changes
+
+- 1fe8f26: updated the timer of an animation for navmenuline to .2 from .7
+
 ## 1.0.3
 
 ### Patch Changes
