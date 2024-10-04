@@ -4,7 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SplitType from "split-type";
 import Lenis from 'lenis'
 import { CustomEase } from "gsap/CustomEase";
-import barba from '@barba/core';
+
 
 // function PageTransition() {
 
