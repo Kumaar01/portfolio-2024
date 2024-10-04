@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.2
+
+### Patch Changes
+
+- f0e1078: changed "main" in json added src/script.js
+
 ## 1.0.1
 
 ### Patch Changes
