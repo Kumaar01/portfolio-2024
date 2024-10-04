@@ -10,7 +10,6 @@ window.Webflow ||= [];
 window.Webflow.push(() => {
 // Select the button and menu elements by their data attributes
 const navMenuBtnOpen = document.querySelector('[custom="menuBtnOpen"]');
-const navMenuBtn = document.querySelector('[custom="menuBtn"]');
 const navMenuBtnClose = document.querySelector('[custom="menuBtnClose"]');
 const navMenuOpen = document.querySelector('[custom="navMenuOpen"]');
 const navMenuConentOpen = document.querySelectorAll('[custom="navMenuConentOpen"] ');
@@ -46,11 +45,11 @@ let tl = gsap.timeline();
   tl.clear();
 
     tl.fromTo(words, {rotationX: 0, opacity:"100%",duration: 0.6, ease: "power2.out", stagger:  0.1 },{rotationX: 90, opacity:"0%",duration: 0.3, ease: "sine.inout", stagger:  .3 },'-=.2');
-    tl.to(navMenuConentOpen, {y: "-120%", duration: 0.3,ease: "power1.out",opacity:"0%", stagger:{amount: 0.7}},'-=.5');
+    tl.to(navMenuConentOpen, {y: "-120%", duration: 0.8,ease: "power1.out",opacity:"0%", stagger:{amount: 0.7}},'-=.2');
     tl.to(navMenuLine, {width:"0%", stagger:.25}, '-=1');
     tl.to(navMenuLinever, {height:"0%"}, '-=1');
     tl.to(navMenuBtnClose, {opacity: 0,display:"none"},"-=.2");
-    tl.to(navMenuOpen, { clipPath: "polygon(20% 0%, 20% 0%, 20% 100%, 40% 100%, 40% 0%, 40% 0%, 40% 100%, 60% 100%, 60% 0%, 60% 0%, 60% 100%, 80% 100%, 80% 0%, 80% 0%, 80% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 20% 100%)",duration: 1}); // Move it back up
+    tl.to(navMenuOpen, { clipPath: "polygon(20% 0%, 20% 0%, 20% 100%, 40% 100%, 40% 0%, 40% 0%, 40% 100%, 60% 100%, 60% 0%, 60% 0%, 60% 100%, 80% 100%, 80% 0%, 80% 0%, 80% 100%, 100% 100%, 100% 0%, 100% 0%, 100% 100%, 20% 100%)",duration: .8},"-=.4"); // Move it back up
     tl.to (navMenuBtnOpen, {opacity:1, display:"block"},'-=.3');
     // tl.to(navmenu,{mixBlendMode:"difference"}),'-=1';
 
