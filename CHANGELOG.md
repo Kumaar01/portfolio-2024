@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.1
+
+### Patch Changes
+
+- 70f9c7c: updated json
+
 ## 2.0.0
 
 ### Major Changes
