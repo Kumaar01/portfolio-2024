@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.5
+
+### Patch Changes
+
+- 55de3a2: updated the how fast the menu animation happens
+
 ## 1.0.4
 
 ### Patch Changes
