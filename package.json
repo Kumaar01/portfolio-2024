@@ -1,13 +1,13 @@
 {
-  "name": "@finsweet/developer-starter",
+  "name": "@kumaardesign/portfolio2024",
   "version": "1.0.0",
-  "description": "Developer starter template for Finsweet projects.",
-  "homepage": "https://github.com/finsweet/developer-starter#readme",
+  "description": "code for protfolio",
+  "homepage": "https://github.com/Kumaar01/portfolio-2024#readme",
   "license": "ISC",
   "keywords": [],
   "author": {
-    "name": "Finsweet",
-    "url": "https://finsweet.com/"
+    "name": "kumaardesigns",
+    "url": "https://www.kumaardesigns.com/"
   },
   "repository": {
     "type": "git",
