@@ -1,5 +1,11 @@
 # @finsweet/developer-starter
 
+## 1.0.7
+
+### Patch Changes
+
+- cc21d5e: removed commented out code
+
 ## 1.0.6
 
 ### Patch Changes
